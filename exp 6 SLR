@@ -1,0 +1,54 @@
+#include <iostream> //input a+a*a
+#include <vector>
+#include <string>
+
+using namespace std;
+
+int n;
+string s;
+vector<char> st;
+vector<char> a;
+
+void check()
+{
+    bool reduction = true;
+    while (reduction)
+    {
+        reduction = false;
+        for (int i = 0; i < st.size(); i++)
+        {
+            if (st[i] == 'a')
+            {
+                st[i] = 'E';
+                reduction = true;
+                break;
+            }
+            if (i + 2 < st.size() && st[i] == 'E' && (st[i + 1] == '+' || st[i + 1] == '*') && st[i + 2] == 'E')
+            {
+                st.erase(st.begin() + i + 1, st.begin() + i + 3);
+                reduction = true;
+                break;
+            }
+        }
+    }
+}
+
+int main()
+{
+    cout << "GRAMMAR is : \n E->E+E \n E->E*E \n E->a\n";
+    cout << "Enter input string: ";
+    cin >> s;
+    n = s.length();
+    for (int i = 0; i < n; i++)
+        a.push_back(s[i]);
+
+    for (int i = 0; i < n; i++)
+    {
+        st.push_back(a[i]);
+        check();
+    }
+    if (st.size() == 1 && st[0] == 'E')
+        cout << "\nString accepted\n";
+    else
+        cout << "\nString rejected\n";
+}
