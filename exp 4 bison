@@ -1,0 +1,69 @@
+bison code 
+%{
+#include <stdio.h>
+#include <stdlib.h>
+#include "lex.yy.c"  // Include the Flex-generated lexer code
+%}
+
+%token NUMBER
+
+%left '+' '-'
+%left '*' '/'
+
+%%
+
+calc: expr   { printf("Result: %d\n", $1); }
+    ;
+
+expr: expr '+' expr   { $$ = $1 + $3; }
+    | expr '-' expr   { $$ = $1 - $3; }
+    | expr '*' expr   { $$ = $1 * $3; }
+    | expr '/' expr   { $$ = $1 / $3; }
+    | '(' expr ')'    { $$ = $2; }
+    | NUMBER          { $$ = $1; }
+    ;
+
+%%
+
+int main() {
+    yyparse();
+    return 0;
+}
+
+void yyerror(const char *msg) {
+    fprintf(stderr, "Error: %s\n", msg);
+}
+
+
+but write 
+
+%{
+#include <stdio.h>
+%}
+
+%%
+"integer"   { printf("Keyword: %s\n", yytext); }
+"read"      { printf("Keyword: %s\n", yytext); }
+"if"|"then"|"else"|"while"|"for"|"to"|"step"|"display"   { printf("Keyword: %s\n", yytext); }
+
+[a-zA-Z_][a-zA-Z0-9_]*  { printf("Identifier: %s\n", yytext); }
+[0-9]+                  { printf("Integer: %s\n", yytext); }
+
+[;=,(){}]               { printf("%s\n", yytext); }
+"=="                     { printf("Equal\n"); }
+">="                     { printf("Greater than or equal\n"); }
+"<="                     { printf("Less than or equal\n"); }
+[><]                     { printf("Greater than or Less than\n"); }
+
+. 	{printf("11");}
+%%
+
+int yywrap(){
+	
+	return 1;
+	}
+	
+int main() {
+    yylex();
+    return 0;
+}
