@@ -1,0 +1,293 @@
+#include <iostream>
+
+using namespace std;
+
+// Node structure for binary tree
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+
+    // Constructor to initialize node
+    Node(int value) {
+        data = value;
+        left = nullptr;
+        right = nullptr;
+    }
+};
+
+// Function to perform in-order traversal
+void inOrder(Node* root) {
+    if (root == nullptr) return;
+    inOrder(root->left);
+    cout << root->data << " ";
+    inOrder(root->right);
+}
+
+// Function to perform pre-order traversal
+void preOrder(Node* root) {
+    if (root == nullptr) return;
+    cout << root->data << " ";
+    preOrder(root->left);
+    preOrder(root->right);
+}
+
+// Function to perform post-order traversal
+void postOrder(Node* root) {
+    if (root == nullptr) return;
+    postOrder(root->left);
+    postOrder(root->right);
+    cout << root->data << " ";
+}
+
+int main() {
+    // Create a sample binary tree
+    Node* root = new Node(1);
+    root->left = new Node(2);
+    root->right = new Node(3);
+    root->left->left = new Node(4);
+    root->left->right = new Node(5);
+
+    cout << "Inorder traversal: ";
+    inOrder(root);
+    cout << endl;
+
+    cout << "Preorder traversal: ";
+    preOrder(root);
+    cout << endl;
+
+    cout << "Postorder traversal: ";
+    postOrder(root);
+    cout << endl;
+
+    // Clean up memory
+    delete root->left->right;
+    delete root->left->left;
+    delete root->left;
+    delete root->right;
+    delete root;
+
+    return 0;
+}
+
+
+Java
+
+/ Node class representing each node in the syntax tree
+class Node {
+    char data;
+    Node left, right;
+
+    public Node(char item) {
+        data = item;
+        left = right = null;
+    }
+}
+
+// Main class to perform tree traversal and arithmetic operations
+public class SyntaxTreeTraversal {
+    // Function to traverse the syntax tree in postorder
+    public void postOrder(Node node) {
+        if (node != null) {
+            postOrder(node.left);
+            postOrder(node.right);
+            System.out.print(node.data + " ");
+        }
+    }
+
+    // Function to traverse the syntax tree in preorder
+    public void preOrder(Node node) {
+        if (node != null) {
+            System.out.print(node.data + " ");
+            preOrder(node.left);
+            preOrder(node.right);
+        }
+    }
+
+    // Function to evaluate the syntax tree
+    public int evaluate(Node root) {
+        // Base case: if the tree is empty, return 0
+        if (root == null) {
+            return 0;
+        }
+
+        // If leaf node, return the integer value of the node
+        if (root.left == null && root.right == null) {
+            return root.data - '0';
+        }
+
+        // Evaluate left and right subtrees recursively
+        int leftVal = evaluate(root.left);
+        int rightVal = evaluate(root.right);
+
+        // Perform arithmetic operation based on the operator
+        switch (root.data) {
+            case '+':
+                return leftVal + rightVal;
+            case '-':
+                return leftVal - rightVal;
+            case '*':
+                return leftVal * rightVal;
+            case '/':
+                if (rightVal != 0) {
+                    return leftVal / rightVal;
+                } else {
+                    throw new ArithmeticException("Cannot divide by zero");
+                }
+        }
+        return 0;
+    }
+
+    public static void main(String[] args) {
+        // Create a sample syntax tree for expression: ((5*2)+(8/2))
+        Node root = new Node('+');
+        root.left = new Node('*');
+        root.right = new Node('/');
+        root.left.left = new Node('3');
+        root.left.right = new Node('2');
+        root.right.left = new Node('10');
+        root.right.right = new Node('2');
+
+        SyntaxTreeTraversal tree = new SyntaxTreeTraversal();
+
+        System.out.println("Postorder traversal of the syntax tree:");
+        tree.postOrder(root);
+        System.out.println();
+
+        System.out.println("Preorder traversal of the syntax tree:");
+        tree.preOrder(root);
+        System.out.println();
+
+        int result = tree.evaluate(root);
+        System.out.println("Result of the arithmetic expression: " + result);
+    }
+}
+
+
+Java - 2
+
+/ Node class representing each node in the syntax tree
+class Node {
+    char data;
+    Node left, right;
+
+    public Node(char item) {
+        data = item;
+        left = right = null;
+    }
+}
+
+// Main class to perform tree traversal and arithmetic operations
+public class SyntaxTreeTraversal {
+    // Function to traverse the syntax tree in postorder
+    public void postOrder(Node node) {
+        if (node != null) {
+            postOrder(node.left);
+            postOrder(node.right);
+            System.out.print(node.data + " ");
+        }
+    }
+
+    // Function to traverse the syntax tree in preorder
+    public void preOrder(Node node) {
+        if (node != null) {
+            System.out.print(node.data + " ");
+            preOrder(node.left);
+            preOrder(node.right);
+        }
+    }
+
+    // Function to evaluate the syntax tree
+    public int evaluate(Node root) {
+        // Base case: if the tree is empty, return 0
+        if (root == null) {
+            return 0;
+        }
+
+        // If leaf node, return the integer value of the node
+        if (root.left == null && root.right == null) {
+            return root.data - '0';
+        }
+
+        // Evaluate left and right subtrees recursively
+        int leftVal = evaluate(root.left);
+        int rightVal = evaluate(root.right);
+
+        // Perform arithmetic operation based on the operator
+        switch (root.data) {
+            case '+':
+                return leftVal + rightVal;
+            case '-':
+                return leftVal - rightVal;
+            case '*':
+                return leftVal * rightVal;
+            case '/':
+                if (rightVal != 0) {
+                    return leftVal / rightVal;
+                } else {
+                    throw new ArithmeticException("Cannot divide by zero");
+                }
+        }
+        return 0;
+    }
+
+    public static void main(String[] args) {
+        // Create a sample syntax tree for expression: ((5*2)+(8/2))
+        Node root = new Node('+');
+        root.left = new Node('*');
+        root.right = new Node('/');
+        root.left.left = new Node('3');
+        root.left.right = new Node('2');
+        root.right.left = new Node('10');
+        root.right.right = new Node('2');if (node.left == null && node.right == null) {
+ return Integer.parseInt(node.value);
+ }
+ int leftValue = traverseAndCalculate(node.left);
+ int rightValue = traverseAndCalculate(node.right);
+ switch (node.value) {
+ case "+":
+ return leftValue + rightValue;
+ case "-":
+ return leftValue - rightValue;
+ case "*":
+ return leftValue * rightValue;
+ case "/":
+ if (rightValue == 0) {
+ throw new ArithmeticException("Division by zero");
+ }
+ return leftValue / rightValue;
+ default:
+ throw new IllegalArgumentException("Invalid operator: " + node.value);
+ }
+ }
+ public static void main(String[] args) {
+ // Example syntax tree: 3 + (5 * 2)
+ TreeNode root = new TreeNode("+");
+ root.left = new TreeNode("3");
+ root.right = new TreeNode("*");
+ root.right.left = new TreeNode("5");
+ root.right.right = new TreeNode("2");
+ // Perform traversal and calculation
+ int result = traverseAndCalculate(root);
+ System.out.println("Result: " + result);
+ }
+}
+
+
+
+        SyntaxTreeTraversal tree = new SyntaxTreeTraversal();
+
+        System.out.println("Postorder traversal of the syntax tree:");
+        tree.postOrder(root);
+        System.out.println();
+
+        System.out.println("Preorder traversal of the syntax tree:");
+        tree.preOrder(root);
+        System.out.println();
+
+        int result = tree.evaluate(root);
+        System.out.println("Result of the arithmetic expression: " + result);
+    }
+}
+
+
