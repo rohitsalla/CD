@@ -1,0 +1,39 @@
+Write an Intermediate code generation for If/While.
+Create a method takes two strings as input: condition represents the condition of the if
+statement, and action represents the action to be performed if the condition is true.
+• Inside the generateIfCode method, a StringBuilder is used to construct the code.
+• The condition and action strings are concatenated to form the if statement block.
+• Finally, the generated code is returned as a string.
+can customize this code by providing different conditions and actions to generate code for
+different if statements. Additionally, can extend this algorithm to handle more complex ifelse or nested if statements as needed.
+
+
+
+import java.util.*;
+public class CodeGenerationForIf {
+ public static void main(String[] args) {
+ // Example input: if (x > 5) { y = x * 2; }
+ String condition = "x > 5";
+ String action = "y = x * 2;";
+ // Generate code for the if statement
+ String generatedCode = generateIfCode(condition, action);
+ System.out.println("Generated code:");
+ System.out.println(generatedCode);
+ }
+ public static String generateIfCode(String condition, String action) {
+ StringBuilder codeBuilder = new StringBuilder();
+ // Add the if statement
+codeBuilder.append("if (").append(condition).append(") {\n");
+ // Add the action inside the if block
+ codeBuilder.append("\t").append(action).append("\n");
+ // Close the if block
+ codeBuilder.append("}");
+ return codeBuilder.toString();
+ }
+}
+
+OUTPUT:
+Generated code:
+if (x > 5) {
+ y = x * 2;
+}
