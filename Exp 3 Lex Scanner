@@ -1,0 +1,30 @@
+%{
+#include <stdio.h>
+%}
+
+%%
+"integer"   { printf("Keyword: %s\n", yytext); }
+"read"      { printf("Keyword: %s\n", yytext); }
+"if"|"then"|"else"|"while"|"for"|"to"|"step"|"display"   { printf("Keyword: %s\n", yytext); }
+
+[a-zA-Z_][a-zA-Z0-9_]*  { printf("Identifier: %s\n", yytext); }
+[0-9]+                  { printf("Integer: %s\n", yytext); }
+
+[;=,(){}]               { printf("%s\n", yytext); }
+"=="                     { printf("Equal\n"); }
+">="                     { printf("Greater than or equal\n"); }
+"<="                     { printf("Less than or equal\n"); }
+[><]                     { printf("Greater than or Less than\n"); }
+
+. 	{printf("11");}
+%%
+
+int yywrap(){
+	
+	return 1;
+	}
+	
+int main() {
+    yylex();
+    return 0;
+}
