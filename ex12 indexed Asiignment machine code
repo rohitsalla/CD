@@ -1,0 +1,92 @@
+Write a program to generate machine code for an indexed assignment statement
+Algorithm:
+Step 1: create a byte array to store the machine code
+Step 2: set the opcode for the MIPS instruction in the byte array
+Step 3: set the source register in the byte array
+Step 4: set the base register in the byte array
+Step 5: set the offset in the byte array
+Step 6: write the machine code to a file
+
+
+Sample Code:
+
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+public class GenerateMachineCodeIndexedAssignment {
+ public static void main(String[] args) throws IOException {
+ // Create a byte array to store the machine code
+ byte[] machineCode = new byte[6];
+ // Set the opcode for the MIPS instruction in the byte array
+ machineCode[0] = (byte) 0x2b;
+ // Set the source register in the byte array
+ machineCode[1] = (byte) 0x04;
+ // Set the base register in the byte array
+ machineCode[2] = (byte) 0x00;
+ // Set the offset in the byte array
+ machineCode[3] = (byte) 0x00;
+ machineCode[4] = (byte) 0x00;
+ machineCode[5] = (byte) 0x18;
+ // Write the machine code to a file
+ try (FileOutputStream fos = new FileOutputStream("machine_code.bin")) {
+ fos.write(machineCode);
+ } catch (IOException e) {
+ e.printStackTrace();
+ }
+ }
+}
+
+
+Explanation:
+The first 6 bits (101011) are the opcode for the sw instruction.
+The next 5 bits (00000) are the source register ($v0).
+The next 5 bits (01000) are the base register ($a0).
+The next 16 bits (0000000000000100) are the offset (4).
+
+Assembly Statement: sw $v0, 4($a0)
+Machine Statement: 10101101000001000000000000011000
+
+
+
+C++ Code 
+
+
+#include <iostream>
+#include <bitset>
+
+using namespace std;
+
+int main() {
+    int index, value;
+
+    // Getting input
+    cout << "Enter index: ";
+    cin >> index;
+    cout << "Enter value: ";
+    cin >> value;
+
+    // Encoding into machine code
+    unsigned int opcode = 0x01; // Assuming opcode for indexed assignment statement
+    unsigned int indexField = index & 0xFF; // Lower 8 bits of index
+    unsigned int valueField = value & 0xFFFF; // Lower 16 bits of value
+
+    // Combining opcode, index, and value into machine code
+    unsigned int machineCode = (opcode << 24) | (indexField << 16) | valueField;
+
+    // Outputting machine code
+    cout << "Generated Machine Code: ";
+    bitset<32> machineCodeBits(machineCode);
+    cout << machineCodeBits << endl;
+
+    // Generating assembly statement
+    cout << "Corresponding Assembly Statement: ";
+    cout << "sw $0, " << index << "($0)" << endl;
+
+    return 0;
+}
+
+
+Enter index: 10
+Enter value: 2
+Generated Machine Code: 00000001000010100000000000000010
+Corresponding Assembly Statement: sw $0, 10($0)
