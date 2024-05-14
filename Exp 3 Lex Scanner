@@ -1,30 +1,54 @@
+sudo apt-get install flex
+
+### Step 2: Create the Lex File
+```c
 %{
 #include <stdio.h>
+
+int word_count = 0;
+int number_count = 0;
+int punctuation_count = 0;
 %}
 
 %%
-"integer"   { printf("Keyword: %s\n", yytext); }
-"read"      { printf("Keyword: %s\n", yytext); }
-"if"|"then"|"else"|"while"|"for"|"to"|"step"|"display"   { printf("Keyword: %s\n", yytext); }
 
-[a-zA-Z_][a-zA-Z0-9_]*  { printf("Identifier: %s\n", yytext); }
-[0-9]+                  { printf("Integer: %s\n", yytext); }
+[a-zA-Z]+   { word_count++; }
+[0-9]+      { number_count++; }
+[.,;:!?]    { punctuation_count++; }
+[ \t\n]     { /* ignore whitespace */ }
+.           { /* ignore any other character */ }
 
-[;=,(){}]               { printf("%s\n", yytext); }
-"=="                     { printf("Equal\n"); }
-">="                     { printf("Greater than or equal\n"); }
-"<="                     { printf("Less than or equal\n"); }
-[><]                     { printf("Greater than or Less than\n"); }
-
-. 	{printf("11");}
 %%
 
-int yywrap(){
-	
-	return 1;
-	}
-	
-int main() {
+int main(void) {
+    printf("Enter text (Ctrl+D to end):\n");
     yylex();
+    printf("Words: %d\n", word_count);
+    printf("Numbers: %d\n", number_count);
+    printf("Punctuation marks: %d\n", punctuation_count);
     return 0;
 }
+
+int yywrap() {
+    return 1;
+}
+```
+
+
+### Step 3: Compile the Lex File
+        flex scanner.l
+        gcc lex.yy.c -o scanner -lfl
+
+
+### Step 4: Run the Program
+./scanner
+
+### Example Usage
+
+```
+Enter text (Ctrl+D to end):
+Hello, world! 1234
+Words: 2
+Numbers: 1
+Punctuation marks: 2
+```

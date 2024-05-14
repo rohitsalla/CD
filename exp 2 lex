@@ -1,39 +1,62 @@
+sudo apt-get install flex
+
+```c
 %{
 #include <stdio.h>
-#include <stdlib.h>
+
+int word_count = 0;
+int number_count = 0;
+int punctuation_count = 0;
 %}
 
 %%
 
-[ \t]           ; // Ignore whitespace
-
-[0-9]+          { printf("Operand: %s\n", yytext); } // Match integers and print them
-[0-9]+"."[0-9]+ { printf("Operand: %s\n", yytext); } // Match floating-point numbers and print them
-
-"+"             { printf("Operator: Addition\n"); }
-"-"             { printf("Operator: Subtraction\n"); }
-"*"             { printf("Operator: Multiplication\n"); }
-"/"             { printf("Operator: Division\n"); }
-"("             { printf("Operator: Left Parenthesis\n"); }
-")"             { printf("Operator: Right Parenthesis\n"); }
-.               { fprintf(stderr, "Error: Invalid character encountered: %s\n", yytext); }
-
+[a-zA-Z]+   { word_count++; }
+[0-9]+      { number_count++; }
+[.,;:!?]    { punctuation_count++; }
+[ \t\n]     { /* ignore whitespace */ }
+.           { /* ignore any other character */ }
 
 %%
 
-int yywrap() {
-    // Return 1 to indicate end of input
-    return 1;
-}
-
-int main() {
+int main(void) {
+    printf("Enter text (Ctrl+D to end):\n");
     yylex();
+    printf("Words: %d\n", word_count);
+    printf("Numbers: %d\n", number_count);
+    printf("Punctuation marks: %d\n", punctuation_count);
     return 0;
 }
 
+int yywrap() {
+    return 1;
+}
+### Step 3: Compile the Lex File
 
-save .lex
-cd Documents
-lex file.lex
-gcc lex.yy.c
-./a.out
+Run the following commands to generate the C source file from the Lex file and then compile it:
+
+```sh
+        flex lexer.l
+        gcc lex.yy.c -o lexer -lfl
+```
+
+### Step 4: Run the Program
+
+        Now you can run the program:
+
+```sh
+./lexer
+```
+
+You can enter text and then press `Ctrl+D` (on Unix-like systems) or `Ctrl+Z` (on Windows) to end the input. The program will then print the counts of words, numbers, and punctuation marks.
+
+### Example Usage
+
+```
+Enter text (Ctrl+D to end):
+Hello, world! 1234
+Words: 2
+Numbers: 1
+Punctuation marks: 2
+```
+

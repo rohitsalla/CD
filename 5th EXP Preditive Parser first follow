@@ -228,21 +228,21 @@ int main()
 
 
 
-Enter the no. of nonterminals
-2
-Enter the productions in a grammar
-S->AB|BC
-A->a|b
-First 
-FIRS[S]=ab
-FIRS[A]=ab
-Follow 
-FOLLOW[S]=$
-FOLLOW[A]=
-
-M[S,a]=S->AB
-M[S,b]=S->AB
-M[S,a]=S->BC
-M[S,b]=S->BC
-M[A,a]=A->a
-M[A,b]=A->b
+//Enter the no. of nonterminals
+//2
+//Enter the productions in a grammar
+//S->AB|BC
+//A->a|b
+//First
+//FIRS[S]=ab
+//FIRS[A]=ab
+//Follow
+//FOLLOW[S]=$
+//FOLLOW[A]=
+//
+//M[S,a]=S->AB
+//M[S,b]=S->AB
+//M[S,a]=S->BC
+//M[S,b]=S->BC
+//M[A,a]=A->a
+//M[A,b]=A->b

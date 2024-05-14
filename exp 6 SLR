@@ -52,3 +52,11 @@ int main()
     else
         cout << "\nString rejected\n";
 }
+/* GRAMMAR is :
+ E->E+E
+ E->E*E
+ E->a
+Enter input string: a+a*a
+
+String accepted
+ */

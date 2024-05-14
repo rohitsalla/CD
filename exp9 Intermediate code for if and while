@@ -88,3 +88,37 @@ int main() {
 
     return 0;
 }
+
+
+Given the program you've provided, let's walk through an example of what the input and output might look like when running this program. This example assumes the user is inputting conditions and code blocks for both an if-else statement and a while loop.
+
+### Example Input
+```
+Enter the condition for if-else statement: x > 5
+Enter the true block for if statement: cout << "x is greater than 5";
+Enter the false block for else statement (press Enter if no else block): cout << "x is not greater than 5";
+
+Enter the condition for while loop: i < 10
+Enter the block for while loop: cout << i << " "; ++i;
+```
+
+### Corresponding Output
+```
+Intermediate Code for if-else statement:
+if (x > 5) {cout << "x is greater than 5";}
+else {cout << "x is not greater than 5";}
+
+Intermediate Code for while loop:
+while (i < 10) {cout << i << " "; ++i;}
+```
+
+### Explanation
+- The program first prompts the user to enter a condition for an if-else statement. The user enters `x > 5`.
+- Next, the program asks for the true block of the if statement, to which the user responds with `cout << "x is greater than 5";`.
+- The program then asks for the false block of the else statement. The user inputs `cout << "x is not greater than 5";`.
+- The program outputs the intermediate code for the if-else statement based on the provided inputs.
+- Moving on to the while loop, the program asks for a condition, and the user inputs `i < 10`.
+- The program then requests the block of code to execute within the while loop. The user enters `cout << i << " "; ++i;`.
+- Finally, the program outputs the intermediate code for the while loop based on the user's inputs.
+
+This example demonstrates how the program takes user input to generate intermediate code representations for an if-else statement and a while loop.
